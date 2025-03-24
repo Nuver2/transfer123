@@ -33,19 +33,38 @@
       window.location.href = `confirmation.html?${params.toString()}`;
     }
   </script>
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-  </style>
 </head>
 <body class="text-white min-h-screen overflow-x-hidden">
+  <style>
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+    [data-animate].in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+    });
+  </script>
   <!-- Booking Section -->
   <div class="h-screen flex items-center justify-center" style="background-image: url('sea.jpg'); background-size: cover; background-position: center;">
     <section id="booking" class="w-full max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <h1 class="text-5xl font-bold mb-4">LuxTransfer</h1>
-        <p class="text-lg text-gray-200 max-w-md">Premium transfer service across Cyprus. Elegant cars, professional drivers, simple booking.</p>
+      <div class="bg-black/40 backdrop-blur-sm p-6 rounded-xl w-fit space-y-2">
+        <h1 class="text-5xl font-bold mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">LuxTransfer</h1>
+        <p class="text-lg text-gray-200 max-w-md drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">Premium transfer service across Cyprus. Elegant cars, professional drivers, simple booking.</p>
       </div>
       <div class="bg-white/10 backdrop-blur-sm text-white rounded-2xl shadow-xl p-8 border border-white/20">
         <div class="space-y-4">
@@ -83,29 +102,28 @@
     </section>
   </div>
 
-  <!-- Other sections remain unchanged -->
   <!-- Vehicles Section -->
-  <section class="h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 p-10 text-center">
+  <section class="h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-b from-sky-800 to-blue-600 p-10 text-center" data-animate>
     <div class="max-w-md mx-auto">
       <img src="vclass.jpg" alt="V-Class" class="rounded-lg shadow mb-6">
-      <h2 class="text-3xl font-bold mb-2">Mercedes V-Class</h2>
-      <p>Spacious and luxurious, ideal for families or groups up to 6 passengers.</p>
+      <h2 class="text-3xl font-bold mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Mercedes V-Class</h2>
+      <p class="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Spacious and luxurious, ideal for families or groups up to 6 passengers.</p>
     </div>
     <div class="max-w-md mx-auto mt-10 md:mt-0 md:ml-10">
       <img src="eclass.jpg" alt="E-Class" class="rounded-lg shadow mb-6">
-      <h2 class="text-3xl font-bold mb-2">Mercedes E-Class</h2>
-      <p>Executive style for solo travelers or couples seeking elegance and comfort.</p>
+      <h2 class="text-3xl font-bold mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Mercedes E-Class</h2>
+      <p class="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Executive style for solo travelers or couples seeking elegance and comfort.</p>
     </div>
   </section>
 
   <!-- Why Choose Us Section -->
-  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-800 to-gray-700 px-6 text-center">
+  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-600 to-blue-500 px-6 text-center" data-animate>
     <h2 class="text-4xl font-bold mb-6">Why Choose LuxTransfer?</h2>
     <p class="max-w-2xl text-lg">We offer fixed rates, professional English-speaking drivers, comfortable modern vehicles, and guaranteed reliability. Book in advance and enjoy worry-free travel in Cyprus.</p>
   </section>
 
   <!-- How It Works Section -->
-  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-700 to-gray-900 px-6 text-center">
+  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-500 to-blue-700 px-6 text-center" data-animate>
     <h2 class="text-4xl font-bold mb-6">How It Works</h2>
     <ol class="space-y-4 text-left max-w-xl mx-auto text-lg">
       <li><strong>Step 1:</strong> Fill out the booking form with your transfer details.</li>
@@ -115,7 +133,7 @@
   </section>
 
   <!-- Support Section -->
-  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black px-6 text-center">
+  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-700 to-slate-800 px-6 text-center" data-animate>
     <h2 class="text-4xl font-bold mb-4">📞 Need Help?</h2>
     <p class="text-lg">Our support team is available 24/7.</p>
     <p class="text-2xl mt-2">Call us at <a href="tel:+35799123456" class="underline">+357 99 123456</a></p>
