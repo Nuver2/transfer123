@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxTransfer Cyprus</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function calculatePrice() {
+      const from = document.getElementById("from").value.trim();
+      const to = document.getElementById("to").value.trim();
+      const passengers = parseInt(document.getElementById("passengers").value);
+      const luggage = document.getElementById("luggage").value;
+      const datetime = document.getElementById("datetime").value;
+      const flight = document.getElementById("flight").value.trim();
+
+      if (!from || !to || !passengers || !luggage || !datetime) {
+        alert("Please fill in all required fields before proceeding.");
+        return;
+      }
+
+      let carType = "E-Class";
+      let price = 60;
+
+      if (passengers > 4) {
+        carType = "V-Class";
+        price = 90;
+      }
+
+      const params = new URLSearchParams({
+        from, to, passengers, luggage, datetime, flight, carType, price
+      });
+      window.location.href = `confirmation.html?${params.toString()}`;
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="text-white min-h-screen overflow-x-hidden">
+  <!-- Booking Section -->
+  <div class="h-screen flex items-center justify-center" style="background-image: url('sea.jpg'); background-size: cover; background-position: center;">
+    <section id="booking" class="w-full max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h1 class="text-5xl font-bold mb-4">LuxTransfer</h1>
+        <p class="text-lg text-gray-200 max-w-md">Premium transfer service across Cyprus. Elegant cars, professional drivers, simple booking.</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm text-white rounded-2xl shadow-xl p-8 border border-white/20">
+        <div class="space-y-4">
+          <div>
+            <label class="block font-medium">Pickup Location</label>
+            <input type="text" id="from" placeholder="e.g. Larnaca Airport" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-white">
+          </div>
+          <div>
+            <label class="block font-medium">Drop-off Location</label>
+            <input type="text" id="to" placeholder="e.g. Limassol Marina" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-white">
+          </div>
+          <div>
+            <label class="block font-medium">Passengers</label>
+            <input type="number" id="passengers" min="1" max="6" value="1" class="w-full p-3 rounded-lg bg-white/20 border border-white/30">
+          </div>
+          <div>
+            <label class="block font-medium">Luggage</label>
+            <select id="luggage" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-black">
+              <option value="light">Backpacks Only</option>
+              <option value="medium">2–3 Medium Suitcases</option>
+              <option value="heavy">4–6 Large Suitcases</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium">Date & Time</label>
+            <input type="datetime-local" id="datetime" class="w-full p-3 rounded-lg bg-white/20 border border-white/30">
+          </div>
+          <div>
+            <label class="block font-medium">Flight Number (optional)</label>
+            <input type="text" id="flight" class="w-full p-3 rounded-lg bg-white/20 border border-white/30">
+          </div>
+          <button onclick="calculatePrice()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 rounded-lg mt-4 transition-all">Calculate & Book</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Other sections remain unchanged -->
+  <!-- Vehicles Section -->
+  <section class="h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 p-10 text-center">
+    <div class="max-w-md mx-auto">
+      <img src="vclass.jpg" alt="V-Class" class="rounded-lg shadow mb-6">
+      <h2 class="text-3xl font-bold mb-2">Mercedes V-Class</h2>
+      <p>Spacious and luxurious, ideal for families or groups up to 6 passengers.</p>
+    </div>
+    <div class="max-w-md mx-auto mt-10 md:mt-0 md:ml-10">
+      <img src="eclass.jpg" alt="E-Class" class="rounded-lg shadow mb-6">
+      <h2 class="text-3xl font-bold mb-2">Mercedes E-Class</h2>
+      <p>Executive style for solo travelers or couples seeking elegance and comfort.</p>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-800 to-gray-700 px-6 text-center">
+    <h2 class="text-4xl font-bold mb-6">Why Choose LuxTransfer?</h2>
+    <p class="max-w-2xl text-lg">We offer fixed rates, professional English-speaking drivers, comfortable modern vehicles, and guaranteed reliability. Book in advance and enjoy worry-free travel in Cyprus.</p>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-700 to-gray-900 px-6 text-center">
+    <h2 class="text-4xl font-bold mb-6">How It Works</h2>
+    <ol class="space-y-4 text-left max-w-xl mx-auto text-lg">
+      <li><strong>Step 1:</strong> Fill out the booking form with your transfer details.</li>
+      <li><strong>Step 2:</strong> See instant pricing and confirm your booking.</li>
+      <li><strong>Step 3:</strong> Receive confirmation, and we’ll handle the rest!</li>
+    </ol>
+  </section>
+
+  <!-- Support Section -->
+  <section class="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black px-6 text-center">
+    <h2 class="text-4xl font-bold mb-4">📞 Need Help?</h2>
+    <p class="text-lg">Our support team is available 24/7.</p>
+    <p class="text-2xl mt-2">Call us at <a href="tel:+35799123456" class="underline">+357 99 123456</a></p>
+  </section>
+</body>
+</html>

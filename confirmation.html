@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 to-black text-white">
+  <div class="w-full max-w-2xl bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-lg">
+    <h2 class="text-3xl font-bold text-center mb-6">✅ Booking Summary</h2>
+    <div id="details" class="space-y-3 text-lg mb-6"></div>
+
+    <h3 class="text-2xl font-semibold mb-4">Your Contact Details</h3>
+    <div class="space-y-4">
+      <input type="text" placeholder="Your Full Name" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-white" id="name">
+      <input type="email" placeholder="Email Address" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-white" id="email">
+      <input type="tel" placeholder="Phone Number" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-white" id="phone">
+      <label class="flex items-center gap-2">
+        <input type="checkbox" id="babySeat" class="accent-blue-500">
+        <span>Require baby seat</span>
+      </label>
+      <textarea id="comment" placeholder="Additional comments..." class="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-white"></textarea>
+    </div>
+
+    <button onclick="submitBooking()" class="mt-6 w-full bg-green-600 hover:bg-green-700 py-3 text-white rounded-lg text-lg font-semibold transition">Confirm Booking</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const detailsDiv = document.getElementById('details');
+
+    const fields = {
+      from: 'Pickup Location',
+      to: 'Drop-off Location',
+      passengers: 'Passengers',
+      luggage: 'Luggage',
+      datetime: 'Date & Time',
+      flight: 'Flight Number',
+      carType: 'Vehicle Type',
+      price: 'Estimated Price (€)'
+    };
+
+    for (const [key, label] of Object.entries(fields)) {
+      const value = params.get(key) || '—';
+      const row = document.createElement('div');
+      row.innerHTML = `<strong>${label}:</strong> ${value}`;
+      detailsDiv.appendChild(row);
+    }
+
+    async function submitBooking() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const babySeat = document.getElementById('babySeat').checked ? 'Yes' : 'No';
+      const comment = document.getElementById('comment').value.trim();
+
+      if (!name || !email || !phone) {
+        alert("Please fill in your name, email, and phone.");
+        return;
+      }
+
+      const bookingData = {
+        from: params.get('from'),
+        to: params.get('to'),
+        passengers: params.get('passengers'),
+        luggage: params.get('luggage'),
+        datetime: params.get('datetime'),
+        flight: params.get('flight'),
+        carType: params.get('carType'),
+        price: params.get('price'),
+        name,
+        email,
+        phone,
+        babySeat,
+        comment
+      };
+
+      try {
+        await fetch("https://script.google.com/macros/s/AKfycbyOJxBLHKE_nqU6-jc1AkG2uPbkzoj2dVMRrFzmmQPzJJHt5w3RsWHeGO2hJ8aU36E_yQ/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingData)
+        });
+        alert("✅ Your booking has been confirmed and saved. Thank you!");
+      } catch (error) {
+        alert("❌ Failed to submit booking. Please try again later.");
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
